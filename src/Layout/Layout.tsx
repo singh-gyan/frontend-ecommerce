@@ -9,10 +9,10 @@ type LayoutProps = {
 const Layout = ({ children }: LayoutProps) => {
   return (
     <Container direction='column'>
-      <Pane bgColor='#fff' color='#000' padding='10px'>
+      <Pane bgColor='#fff' color='#000' padding='10px' zIndex='1000'>
         <Navbar />
       </Pane>
-      <Pane color='#000' overflow='auto' bgColor='#eee' padding='10px'>
+      <Pane color='#000' overflow='auto' padding='3em'>
         {children}
       </Pane>
     </Container>

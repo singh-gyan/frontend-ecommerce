@@ -1,4 +1,3 @@
-import React from 'react';
 import axios from 'axios';
 import { getCatalog } from '../api/paths';
 import { useQuery } from '@tanstack/react-query';
@@ -13,25 +12,30 @@ const Home = () => {
   if (isLoading) {
     return <div>Loading...</div>;
   }
+
   return (
     <Container justify='center'>
       <Stack direction={'row'} gap={10}>
-        {categories.map((product: { image?: string; category?: string }) => (
-          <Card
-            onClick={() => {
-              nav(`/${product.category}`);
-            }}
-          >
-            <CardActionArea>
-              <CardMedia
-                component={'img'}
-                alt={product?.category}
-                height='140'
-                image={product?.image}
-              />
-            </CardActionArea>
-          </Card>
-        ))}
+        {categories.map(
+          (product: { id: number; image?: string; category?: string }) => (
+            <Card
+              onClick={() => {
+                nav(`/${product.category}`);
+              }}
+              key={product.id}
+            >
+              <CardActionArea>
+                <CardMedia
+                  component={'img'}
+                  alt={product?.category}
+                  height='140'
+                  width={'140'}
+                  image={product?.image}
+                />
+              </CardActionArea>
+            </Card>
+          )
+        )}
       </Stack>
     </Container>
   );

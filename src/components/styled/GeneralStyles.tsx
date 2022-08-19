@@ -30,6 +30,7 @@ type PaneProps = {
   padding?: string;
   flex?: string;
   height?: string;
+  zIndex?: string;
 };
 
 export const Pane = styled.div`
@@ -39,4 +40,5 @@ export const Pane = styled.div`
   color: ${(props: PaneProps) => props.color || '#000'};
   overflow: ${(props: PaneProps) => props.overflow || 'hidden'};
   padding: ${(props: PaneProps) => props.padding || '0'};
+  z-index: ${(props: PaneProps) => props.zIndex || '0'};
 `;

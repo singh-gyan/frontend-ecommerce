@@ -9,14 +9,27 @@ import {
 } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
-import React from 'react';
+import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { baseUrl } from '../api/paths';
+import FavouriteSVG from '../assets/FavouriteSVG';
+import useAppStore from '../zustand';
+
+interface Product {
+  Title?: string;
+  Image?: string;
+  Price?: string;
+  _id: string;
+}
 
 const Product = () => {
   const location = useLocation();
   const nav = useNavigate();
+  const isAuthenticated = useAppStore(state => state.isAuthenticated);
   console.log(location.pathname);
+  const [wishList, setWishList] = useState<{ [key: string]: number | string }>(
+    {}
+  );
   const { data: brands, isLoading } = useQuery(
     [`${location.pathname.split('/')[1]}`],
     () =>
@@ -27,56 +40,309 @@ const Product = () => {
   if (isLoading) {
     return <div>Loading...</div>;
   }
+  const handleWishList = (productId: any | undefined) => {
+    if (!productId?.id) return;
+    console.log(productId.id);
+    if (!isAuthenticated) nav('/login');
+    if (wishList[productId.id]) {
+      let temp = { ...wishList };
+      delete temp[productId.id];
+      setWishList(temp);
+    } else {
+      setWishList(prev => {
+        return { ...prev, [productId.id]: productId.id };
+      });
+    }
+  };
+
   return (
-    <div>
-      <Grid container spacing={3}>
-        {brands.map((brand: { items?: object[] }) =>
-          brand?.items?.map(
-            (data: {
-              Title?: string;
-              Image?: string;
-              Price?: string;
-              _id?: string;
-            }) => (
-              <Grid item xs={12} sm={3} md={3} key={data?._id}>
-                <Card
-                  onClick={() => {
-                    nav(`${location.pathname}/${data?._id}`);
-                  }}
+    <section>
+      <div className='max-w-screen-xl px-4 py-12 mx-auto sm:px-6 lg:px-8'>
+        <div className='grid grid-cols-1 gap-4 lg:grid-cols-4 lg:items-start'>
+          <div className='lg:sticky lg:top-4'>
+            <details
+              open
+              className='overflow-hidden border border-gray-200 rounded'
+            >
+              <summary className='flex items-center justify-between px-5 py-3 bg-gray-100 lg:hidden'>
+                <span className='text-sm font-medium'>Toggle Filters</span>
+
+                <svg
+                  className='w-5 h-5'
+                  xmlns='http://www.w3.org/2000/svg'
+                  fill='none'
+                  viewBox='0 0 24 24'
+                  stroke='currentColor'
                 >
-                  <CardActionArea>
-                    <CardMedia
-                      component={'img'}
-                      alt={data?.Title}
-                      height='140'
-                      width='140'
-                      image={data?.Image}
-                      loading='lazy'
-                    />
-                  </CardActionArea>
-                  <CardContent>
-                    <Stack justifyContent={'space-between'}>
-                      <Typography component='div'>₹{data?.Price}</Typography>
-                      <Typography
-                        component='div'
-                        sx={{
-                          width: '100%',
-                          overflow: 'hidden',
-                          textOverflow: 'ellipsis',
-                          whiteSpace: 'nowrap',
-                        }}
+                  <path
+                    strokeLinecap='round'
+                    strokeLinejoin='round'
+                    strokeWidth='2'
+                    d='M4 6h16M4 12h16M4 18h16'
+                  />
+                </svg>
+              </summary>
+
+              <form
+                action=''
+                className='border-t border-gray-200 lg:border-t-0'
+              >
+                <fieldset>
+                  <legend className='block w-full px-5 py-3 text-xs font-medium bg-gray-50'>
+                    Type
+                  </legend>
+
+                  <div className='px-5 py-6 space-y-2'>
+                    <div className='flex items-center'>
+                      <input
+                        id='toy'
+                        type='checkbox'
+                        name='type[toy]'
+                        className='w-5 h-5 border-gray-300 rounded'
+                      />
+
+                      <label htmlFor='toy' className='ml-3 text-sm font-medium'>
+                        Toy
+                      </label>
+                    </div>
+
+                    <div className='flex items-center'>
+                      <input
+                        id='game'
+                        type='checkbox'
+                        name='type[game]'
+                        className='w-5 h-5 border-gray-300 rounded'
+                      />
+
+                      <label
+                        htmlFor='game'
+                        className='ml-3 text-sm font-medium'
                       >
-                        {data?.Title}
-                      </Typography>
-                    </Stack>
-                  </CardContent>
-                </Card>
-              </Grid>
-            )
-          )
-        )}
-      </Grid>
-    </div>
+                        Game
+                      </label>
+                    </div>
+
+                    <div className='flex items-center'>
+                      <input
+                        id='outdoor'
+                        type='checkbox'
+                        name='type[outdoor]'
+                        className='w-5 h-5 border-gray-300 rounded'
+                      />
+
+                      <label
+                        htmlFor='outdoor'
+                        className='ml-3 text-sm font-medium'
+                      >
+                        Outdoor
+                      </label>
+                    </div>
+
+                    <div className='pt-2'>
+                      <button
+                        type='button'
+                        className='text-xs text-gray-500 underline'
+                      >
+                        Reset Type
+                      </button>
+                    </div>
+                  </div>
+                </fieldset>
+
+                <div>
+                  <fieldset>
+                    <legend className='block w-full px-5 py-3 text-xs font-medium bg-gray-50'>
+                      Age
+                    </legend>
+
+                    <div className='px-5 py-6 space-y-2'>
+                      <div className='flex items-center'>
+                        <input
+                          id='3+'
+                          type='checkbox'
+                          name='age[3+]'
+                          className='w-5 h-5 border-gray-300 rounded'
+                        />
+
+                        <label
+                          htmlFor='3+'
+                          className='ml-3 text-sm font-medium'
+                        >
+                          3+
+                        </label>
+                      </div>
+
+                      <div className='flex items-center'>
+                        <input
+                          id='8+'
+                          type='checkbox'
+                          name='age[8+]'
+                          className='w-5 h-5 border-gray-300 rounded'
+                        />
+
+                        <label
+                          htmlFor='8+'
+                          className='ml-3 text-sm font-medium'
+                        >
+                          8+
+                        </label>
+                      </div>
+
+                      <div className='flex items-center'>
+                        <input
+                          id='12+'
+                          type='checkbox'
+                          name='age[12+]'
+                          className='w-5 h-5 border-gray-300 rounded'
+                        />
+
+                        <label
+                          htmlFor='12+'
+                          className='ml-3 text-sm font-medium'
+                        >
+                          12+
+                        </label>
+                      </div>
+
+                      <div className='flex items-center'>
+                        <input
+                          id='16+'
+                          type='checkbox'
+                          name='age[16+]'
+                          className='w-5 h-5 border-gray-300 rounded'
+                        />
+
+                        <label
+                          htmlFor='16+'
+                          className='ml-3 text-sm font-medium'
+                        >
+                          16+
+                        </label>
+                      </div>
+
+                      <div className='pt-2'>
+                        <button
+                          type='button'
+                          className='text-xs text-gray-500 underline'
+                        >
+                          Reset Age
+                        </button>
+                      </div>
+                    </div>
+                  </fieldset>
+                </div>
+
+                <div className='flex justify-between px-5 py-3 border-t border-gray-200'>
+                  <button
+                    name='reset'
+                    type='button'
+                    className='text-xs font-medium text-gray-600 underline rounded'
+                  >
+                    Reset All
+                  </button>
+
+                  <button
+                    name='commit'
+                    type='button'
+                    className='px-5 py-3 text-xs font-medium text-white bg-green-600 rounded'
+                  >
+                    Apply Filters
+                  </button>
+                </div>
+              </form>
+            </details>
+          </div>
+
+          <div className='lg:col-span-3'>
+            <div className='flex items-center justify-between'>
+              <p className='text-sm text-gray-500'>
+                <span className='hidden sm:inline'>Showing</span>6 of 24
+                Products
+              </p>
+
+              <div className='ml-4'>
+                <label htmlFor='SortBy' className='sr-only'>
+                  Sort
+                </label>
+
+                <select
+                  id='SortBy'
+                  name='sort_by'
+                  className='text-sm border-gray-100 rounded'
+                >
+                  <option>Sort</option>
+                  <option value='title-asc'>Title, A-Z</option>
+                  <option value='title-desc'>Title, Z-A</option>
+                  <option value='price-asc'>Price, Low-High</option>
+                  <option value='price-desc'>Price, High-Low</option>
+                </select>
+              </div>
+            </div>
+            <div
+              className='grid grid-cols-1 gap-px mt-4 bg-gray-200 border border-gray-200 sm:grid-cols-2 lg:grid-cols-3'
+              onClick={e => handleWishList(e.target)}
+            >
+              {brands.map((brand: { items?: [] }) =>
+                brand?.items?.map((data: Product) => (
+                  <div className='relative block bg-white' key={data._id}>
+                    <button
+                      type='button'
+                      name='wishlist'
+                      id={data._id}
+                      className='absolute p-2 text-white bg-black rounded-full right-4 top-4'
+                    >
+                      <FavouriteSVG wishList={wishList} productId={data._id} />
+                    </button>
+
+                    <img
+                      loading='lazy'
+                      alt='Build Your Own Drone'
+                      className='object-contain w-full h-56 lg:h-72'
+                      src={data.Image}
+                    />
+
+                    <div className='p-6'>
+                      <span className='inline-block px-3 py-1 text-xs font-medium bg-yellow-400'>
+                        New
+                      </span>
+
+                      <h5 className='mt-4 text-lg font-bold'>{data.Title}</h5>
+
+                      <p className='mt-2 text-sm font-medium text-gray-600'>
+                        ₹ {data.Price}
+                      </p>
+
+                      <button
+                        name='add'
+                        type='button'
+                        className='flex items-center justify-center w-full px-8 py-4 mt-4 bg-yellow-500 rounded-sm'
+                      >
+                        <span className='text-sm font-medium'>Add to Cart</span>
+
+                        <svg
+                          className='w-5 h-5 ml-1.5'
+                          xmlns='http://www.w3.org/2000/svg'
+                          fill='none'
+                          viewBox='0 0 24 24'
+                          stroke='currentColor'
+                        >
+                          <path
+                            strokeLinecap='round'
+                            strokeLinejoin='round'
+                            strokeWidth='2'
+                            d='M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z'
+                          />
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   );
 };
 

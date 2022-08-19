@@ -18,6 +18,7 @@ function App() {
         <Route path='/login' element={<Login />} />
         <Route path='/signup' element={<Signup />} />
         <Route path='/cart' element={<Cart />} />
+        <Route path='/profile' element={<div>Coming Soon...</div>} />
       </Routes>
     </Layout>
   );
