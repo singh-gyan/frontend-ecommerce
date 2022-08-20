@@ -12,7 +12,7 @@ const Layout = ({ children }: LayoutProps) => {
     <>
       {/* <Drawer /> */}
       <Navbar />
-      <div className='p-10 h-[90vh] overflow-scroll'>{children}</div>
+      <div className='p-2 lg:p-10 h-[90vh] overflow-scroll'>{children}</div>
     </>
   );
 };

@@ -14,7 +14,7 @@ const AppDrawer = ({ open, setOpen }: Props) => {
     <Drawer open={open} anchor='left' onClose={() => setOpen(false)}>
       <div
         id='drawer-navigation'
-        className='h-screen p-4 overflow-y-auto bg-white w-80 dark:bg-gray-800'
+        className='h-screen p-4 overflow-y-auto bg-white w-64 dark:bg-gray-800'
         tabIndex={-1}
         aria-labelledby='drawer-navigation-label'
       >
