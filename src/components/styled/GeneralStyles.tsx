@@ -14,6 +14,7 @@ type ContainerProps = {
     | 'space-between'
     | 'space-around';
   gap?: string;
+  overflow?: 'auto' | 'hidden' | 'scroll' | 'visible';
 };
 export const Container = styled.div`
   display: flex;
@@ -21,6 +22,7 @@ export const Container = styled.div`
   gap: ${(props: ContainerProps) => props.gap || '0'};
   justify-content: ${(props: ContainerProps) => props.justify || 'none'};
   align-items: ${(props: ContainerProps) => props.align || 'none'};
+  overflow: ${(props: ContainerProps) => props.overflow || 'auto'};
 `;
 
 type PaneProps = {

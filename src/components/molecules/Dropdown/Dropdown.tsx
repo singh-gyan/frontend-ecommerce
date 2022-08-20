@@ -15,7 +15,7 @@ const Dropdown = ({ items, showUserList, setShowUserList }: IDropdownProps) => {
 
   return (
     <Popover.Overlay>
-      <div className='absolute bg-white shadow-2xl z-50 w-28 top-1 -left-10 border-2 rounded-md'>
+      <div className='absolute bg-white shadow-md w-40 bottom -left-10 border-2 rounded-md'>
         <ul>
           {items.map((item: string, index) => (
             <li key={index}>

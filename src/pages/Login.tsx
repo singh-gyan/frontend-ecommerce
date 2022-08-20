@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { login } from '../api/paths';
 import useAppStore from '../zustand';
 type FormData = { email: string; password: string };
@@ -129,9 +129,9 @@ const Login = () => {
 
           <p className='text-sm text-center text-gray-500'>
             No account?
-            <a className='underline' href='/signup'>
+            <Link className='underline' to='/signup'>
               Sign up
-            </a>
+            </Link>
           </p>
         </form>
       </div>

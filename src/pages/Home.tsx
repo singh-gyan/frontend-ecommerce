@@ -3,7 +3,7 @@ import { getCatalog } from '../api/paths';
 import { useQuery } from '@tanstack/react-query';
 import { Container } from '../components/styled/GeneralStyles';
 import { Card, CardActionArea, CardMedia, Stack } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 const Home = () => {
   const nav = useNavigate();
   const { data: categories, isLoading } = useQuery(['catalog'], () =>
@@ -15,28 +15,22 @@ const Home = () => {
 
   return (
     <Container justify='center'>
-      <Stack direction={'row'} gap={10}>
+      <div className='grid grid-cols-1 grid-rows-2 gap-10 md:grid-cols-2 lg:grid-cols-3'>
         {categories.map(
           (product: { id: number; image?: string; category?: string }) => (
-            <Card
-              onClick={() => {
-                nav(`/${product.category}`);
-              }}
-              key={product.id}
-            >
-              <CardActionArea>
-                <CardMedia
-                  component={'img'}
-                  alt={product?.category}
-                  height='140'
-                  width={'140'}
-                  image={product?.image}
-                />
-              </CardActionArea>
-            </Card>
+            <Link to={`${product.category}`} className='shadow-lg  '>
+              <img
+                src={product.image}
+                alt={product.category}
+                className='w-72 h-64'
+              />
+              <div className='text-center'>
+                {product.category?.toLocaleUpperCase()}
+              </div>
+            </Link>
           )
         )}
-      </Stack>
+      </div>
     </Container>
   );
 };

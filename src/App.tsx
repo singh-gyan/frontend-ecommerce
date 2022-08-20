@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useRoutes } from 'react-router-dom';
 import reactLogo from './assets/react.svg';
 import Layout from './Layout/Layout';
 import Home from './pages/Home';
@@ -8,17 +8,21 @@ import Product from './pages/Product';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Cart from './pages/Cart';
+import ComingSoon from './pages/ComingSoon';
 function App() {
   return (
     <Layout>
       <ReactQueryDevtools initialIsOpen />
       <Routes>
-        <Route path='/:product' element={<Product />} />
         <Route path='/' element={<Home />} />
-        <Route path='/login' element={<Login />} />
-        <Route path='/signup' element={<Signup />} />
-        <Route path='/cart' element={<Cart />} />
-        <Route path='/profile' element={<div>Coming Soon...</div>} />
+        <Route path=':product' element={<Product />} />
+        <Route path='login' element={<Login />} />
+        <Route path='signup' element={<Signup />} />
+        <Route path='cart' element={<ComingSoon />} />
+        <Route path='loguot' element={<ComingSoon />} />
+        <Route path='about' element={<ComingSoon />} />
+        <Route path='contact' element={<ComingSoon />} />
+        <Route path='profile' element={<ComingSoon />} />
       </Routes>
     </Layout>
   );

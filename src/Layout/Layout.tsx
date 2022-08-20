@@ -8,14 +8,10 @@ type LayoutProps = {
 
 const Layout = ({ children }: LayoutProps) => {
   return (
-    <Container direction='column'>
-      <Pane bgColor='#fff' color='#000' padding='10px' zIndex='1000'>
-        <Navbar />
-      </Pane>
-      <Pane color='#000' overflow='auto' padding='3em'>
-        {children}
-      </Pane>
-    </Container>
+    <>
+      <Navbar />
+      <div className='p-10 h-[90vh] overflow-scroll'>{children}</div>
+    </>
   );
 };
 

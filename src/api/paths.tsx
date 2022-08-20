@@ -1,9 +1,10 @@
-export const baseUrl: string = `${import.meta.env.VITE_URL_PATH}/`;
+const url = import.meta.env.VITE_URL_PATH || import.meta.env.VITE_PROD_URL_PATH;
+export const baseUrl: string = `${url}/`;
 
-export const getCatalog: string = `${import.meta.env.VITE_URL_PATH}/`;
+export const getCatalog: string = `${url}/`;
 
-export const login: string = `${import.meta.env.VITE_URL_PATH}/login`;
+export const login: string = `${url}/login`;
 
-export const signup: string = `${import.meta.env.VITE_URL_PATH}/signup`;
+export const signup: string = `${url}/signup`;
 
-export const user: string = `${import.meta.env.VITE_URL_PATH}/user`;
+export const user: string = `${url}/user`;

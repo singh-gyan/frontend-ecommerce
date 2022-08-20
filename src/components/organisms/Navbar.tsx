@@ -19,7 +19,7 @@ const Navbar = () => {
   const isAuthenticated = useAppStore(state => state.isAuthenticated);
 
   return (
-    <header className='border-b border-gray-100'>
+    <header className='border-b border-gray-100 sticky'>
       <div className='flex items-center justify-between h-16 mx-auto max-w-screen-2xl sm:px-6 lg:px-8'>
         <div className='flex items-center'>
           <button type='button' className='p-2 sm:mr-4 lg:hidden'>
@@ -40,7 +40,9 @@ const Navbar = () => {
           </button>
 
           <Link to='/' className='flex'>
-            <span className='inline-block w-32 h-10 bg-gray-200 rounded-lg'></span>
+            <span className='inline-block w-32 h-10 rounded-lg hover:bg-blue-100 text-center text-[1.3em] '>
+              Apni Dukaan
+            </span>
           </Link>
         </div>
 
@@ -51,13 +53,6 @@ const Navbar = () => {
               className='block h-16 leading-[4rem] border-b-4 border-transparent hover:text-blue-600 hover:border-current'
             >
               About
-            </Link>
-
-            <Link
-              to='/news'
-              className='block h-16 leading-[4rem] border-b-4 border-transparent hover:text-blue-600 hover:border-current'
-            >
-              News
             </Link>
 
             <Link

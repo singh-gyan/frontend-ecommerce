@@ -21,7 +21,7 @@ interface Product {
   Price?: string;
   _id: string;
 }
-
+const rating = ['5', '4+', '3+'];
 const Product = () => {
   const location = useLocation();
   const nav = useNavigate();
@@ -89,61 +89,34 @@ const Product = () => {
               >
                 <fieldset>
                   <legend className='block w-full px-5 py-3 text-xs font-medium bg-gray-50'>
-                    Type
+                    Brand
                   </legend>
 
                   <div className='px-5 py-6 space-y-2'>
-                    <div className='flex items-center'>
-                      <input
-                        id='toy'
-                        type='checkbox'
-                        name='type[toy]'
-                        className='w-5 h-5 border-gray-300 rounded'
-                      />
+                    {brands.map((items: { company?: string }) => (
+                      <div className='flex items-center'>
+                        <input
+                          id='toy'
+                          type='checkbox'
+                          name='type[toy]'
+                          className='w-5 h-5 border-gray-300 rounded'
+                        />
 
-                      <label htmlFor='toy' className='ml-3 text-sm font-medium'>
-                        Toy
-                      </label>
-                    </div>
-
-                    <div className='flex items-center'>
-                      <input
-                        id='game'
-                        type='checkbox'
-                        name='type[game]'
-                        className='w-5 h-5 border-gray-300 rounded'
-                      />
-
-                      <label
-                        htmlFor='game'
-                        className='ml-3 text-sm font-medium'
-                      >
-                        Game
-                      </label>
-                    </div>
-
-                    <div className='flex items-center'>
-                      <input
-                        id='outdoor'
-                        type='checkbox'
-                        name='type[outdoor]'
-                        className='w-5 h-5 border-gray-300 rounded'
-                      />
-
-                      <label
-                        htmlFor='outdoor'
-                        className='ml-3 text-sm font-medium'
-                      >
-                        Outdoor
-                      </label>
-                    </div>
+                        <label
+                          htmlFor='toy'
+                          className='ml-3 text-sm font-medium'
+                        >
+                          {items.company?.split('-')[0].toUpperCase()}
+                        </label>
+                      </div>
+                    ))}
 
                     <div className='pt-2'>
                       <button
                         type='button'
                         className='text-xs text-gray-500 underline'
                       >
-                        Reset Type
+                        Reset Brand
                       </button>
                     </div>
                   </div>
@@ -152,80 +125,33 @@ const Product = () => {
                 <div>
                   <fieldset>
                     <legend className='block w-full px-5 py-3 text-xs font-medium bg-gray-50'>
-                      Age
+                      Rating
                     </legend>
 
                     <div className='px-5 py-6 space-y-2'>
-                      <div className='flex items-center'>
-                        <input
-                          id='3+'
-                          type='checkbox'
-                          name='age[3+]'
-                          className='w-5 h-5 border-gray-300 rounded'
-                        />
+                      {rating.map(rating => (
+                        <div className='flex items-center'>
+                          <input
+                            id={rating}
+                            type='checkbox'
+                            className='w-5 h-5 border-gray-300 rounded'
+                          />
 
-                        <label
-                          htmlFor='3+'
-                          className='ml-3 text-sm font-medium'
-                        >
-                          3+
-                        </label>
-                      </div>
-
-                      <div className='flex items-center'>
-                        <input
-                          id='8+'
-                          type='checkbox'
-                          name='age[8+]'
-                          className='w-5 h-5 border-gray-300 rounded'
-                        />
-
-                        <label
-                          htmlFor='8+'
-                          className='ml-3 text-sm font-medium'
-                        >
-                          8+
-                        </label>
-                      </div>
-
-                      <div className='flex items-center'>
-                        <input
-                          id='12+'
-                          type='checkbox'
-                          name='age[12+]'
-                          className='w-5 h-5 border-gray-300 rounded'
-                        />
-
-                        <label
-                          htmlFor='12+'
-                          className='ml-3 text-sm font-medium'
-                        >
-                          12+
-                        </label>
-                      </div>
-
-                      <div className='flex items-center'>
-                        <input
-                          id='16+'
-                          type='checkbox'
-                          name='age[16+]'
-                          className='w-5 h-5 border-gray-300 rounded'
-                        />
-
-                        <label
-                          htmlFor='16+'
-                          className='ml-3 text-sm font-medium'
-                        >
-                          16+
-                        </label>
-                      </div>
+                          <label
+                            htmlFor={rating}
+                            className='ml-3 text-sm font-medium'
+                          >
+                            {rating}
+                          </label>
+                        </div>
+                      ))}
 
                       <div className='pt-2'>
                         <button
                           type='button'
                           className='text-xs text-gray-500 underline'
                         >
-                          Reset Age
+                          Reset Rating
                         </button>
                       </div>
                     </div>
