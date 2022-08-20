@@ -10,6 +10,7 @@ import Signup from './pages/Signup';
 import Cart from './pages/Cart';
 import ComingSoon from './pages/ComingSoon';
 function App() {
+  console.log(import.meta.env);
   return (
     <Layout>
       <ReactQueryDevtools initialIsOpen />
