@@ -1,44 +1,30 @@
 import { Badge, Button, IconButton, BadgeProps } from '@mui/material';
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Container, Pane } from '../styled/GeneralStyles';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { styled } from '@mui/material/styles';
 import useAppStore from '../../zustand';
 import UserActions from '../molecules/UserActions';
-const StyledBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
-  '& .MuiBadge-badge': {
-    right: -3,
-    top: 13,
-    border: `2px solid ${theme.palette.background.paper}`,
-    padding: '0 4px',
-  },
-}));
+import MenuSVG from '../../assets/MenuSVG';
+import Drawer from '../molecules/Drawer';
+import AppDrawer from '../molecules/Drawer';
 
 const Navbar = () => {
   const isAuthenticated = useAppStore(state => state.isAuthenticated);
-
+  const [open, setOpen] = useState(false);
   return (
     <header className='border-b border-gray-100 sticky'>
       <div className='flex items-center justify-between h-16 mx-auto max-w-screen-2xl sm:px-6 lg:px-8'>
         <div className='flex items-center'>
-          <button type='button' className='p-2 sm:mr-4 lg:hidden'>
-            <svg
-              className='w-6 h-6'
-              xmlns='http://www.w3.org/2000/svg'
-              fill='none'
-              viewBox='0 0 24 24'
-              stroke='currentColor'
-            >
-              <path
-                strokeLinecap='round'
-                strokeLinejoin='round'
-                strokeWidth='2'
-                d='M4 6h16M4 12h16M4 18h16'
-              />
-            </svg>
+          <button
+            type='button'
+            className='p-2 sm:mr-4 lg:hidden'
+            onClick={() => setOpen(true)}
+          >
+            <MenuSVG />
           </button>
-
+          <AppDrawer open={open} setOpen={setOpen} />
           <Link to='/' className='flex'>
             <span className='inline-block w-32 h-10 rounded-lg hover:bg-blue-100 text-center text-[1.3em] '>
               Apni Dukaan
@@ -93,4 +79,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default React.memo(Navbar);

@@ -96,14 +96,14 @@ const Product = () => {
                     {brands.map((items: { company?: string }) => (
                       <div className='flex items-center'>
                         <input
-                          id='toy'
+                          id={items.company}
                           type='checkbox'
                           name='type[toy]'
                           className='w-5 h-5 border-gray-300 rounded'
                         />
 
                         <label
-                          htmlFor='toy'
+                          htmlFor={items.company}
                           className='ml-3 text-sm font-medium'
                         >
                           {items.company?.split('-')[0].toUpperCase()}

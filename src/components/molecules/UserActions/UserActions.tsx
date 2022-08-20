@@ -34,7 +34,7 @@ const UserActions = () => {
             <>
               <Popover.Button
                 // onClick={handleAccountClick}
-                className='block p-6 border-b-4 border-transparent hover:border-blue-600'
+                className='hidden lg:block p-6 border-b-4 border-transparent hover:border-blue-600'
               >
                 <UserSVG />
 
