@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
-import React, { useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import React, { HTMLAttributes, useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { baseUrl } from '../api/paths';
 import FavouriteSVG from '../assets/FavouriteSVG';
 import Spinner from '../components/atoms/Spinner';
@@ -36,17 +36,20 @@ const Product = () => {
       </>
     );
   }
-  const handleWishList = (productId: any | undefined) => {
-    if (!productId?.id) return;
-    console.log(productId.id);
+  const handleWishList = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent> | any
+  ) => {
+    let productId = e.target.id;
+    if (!productId) return;
     if (!isAuthenticated) nav('/login');
-    if (wishList[productId.id]) {
+    e.stopPropagation();
+    if (wishList[productId]) {
       let temp = { ...wishList };
-      delete temp[productId.id];
+      delete temp[productId];
       setWishList(temp);
     } else {
       setWishList(prev => {
-        return { ...prev, [productId.id]: productId.id };
+        return { ...prev, [productId]: productId };
       });
     }
   };
@@ -200,10 +203,7 @@ const Product = () => {
                 </select>
               </div>
             </div>
-            <div
-              className='grid grid-cols-1 gap-px mt-4 bg-gray-200 border border-gray-200 sm:grid-cols-2 lg:grid-cols-3'
-              onClick={e => handleWishList(e.target)}
-            >
+            <div className='grid grid-cols-1 gap-px mt-4 bg-gray-200 border border-gray-200 sm:grid-cols-2 lg:grid-cols-3'>
               {brands.map((brand: { items?: [] }) =>
                 brand?.items?.map((data: Product) => (
                   <div className='relative block bg-white' key={data._id}>
@@ -211,26 +211,29 @@ const Product = () => {
                       type='button'
                       name='wishlist'
                       id={data._id}
-                      className='absolute p-2 text-white bg-black rounded-full right-4 top-4'
+                      className='absolute p-2 text-white bg-black rounded-full right-4 top-4 z-40'
+                      onClick={e => handleWishList(e)}
                     >
                       <FavouriteSVG wishList={wishList} productId={data._id} />
                     </button>
-
-                    <img
-                      loading='lazy'
-                      alt='Build Your Own Drone'
-                      className='object-contain w-full h-56 lg:h-72'
-                      src={data.Image}
-                    />
+                    <Link to={`/product/${data._id}`}>
+                      <img
+                        loading='lazy'
+                        alt='Build Your Own Drone'
+                        className='object-contain w-full h-56 lg:h-72 -z-50'
+                        src={data.Image}
+                      />
+                    </Link>
 
                     <div className='p-6'>
                       <span className='inline-block px-3 py-1 text-xs font-medium bg-yellow-400'>
                         New
                       </span>
-
-                      <h5 className='mt-4 text-lg font-bold h-20 overflow-hidden '>
-                        {data.Title}
-                      </h5>
+                      <Link to={`/product/${data._id}`}>
+                        <h5 className='mt-4 text-lg font-bold h-20 overflow-hidden '>
+                          {data.Title}
+                        </h5>
+                      </Link>
 
                       <p className='mt-2 text-sm font-medium text-gray-600'>
                         ₹ {data.Price}
