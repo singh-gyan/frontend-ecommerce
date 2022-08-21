@@ -4,13 +4,18 @@ import { useQuery } from '@tanstack/react-query';
 import { Container } from '../components/styled/GeneralStyles';
 import { Card, CardActionArea, CardMedia, Stack } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
+import Spinner from '../components/atoms/Spinner';
 const Home = () => {
   const nav = useNavigate();
   const { data: categories, isLoading } = useQuery(['catalog'], () =>
     axios.get(getCatalog).then(res => res.data)
   );
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <>
+        <Spinner />
+      </>
+    );
   }
 
   return (
@@ -18,7 +23,11 @@ const Home = () => {
       <div className='grid grid-cols-1 grid-rows-2 gap-10 md:grid-cols-2 lg:grid-cols-3'>
         {categories.map(
           (product: { id: number; image?: string; category?: string }) => (
-            <Link to={`${product.category}`} className='shadow-lg  '>
+            <Link
+              to={`${product.category}`}
+              className='shadow-lg'
+              key={product.id}
+            >
               <img
                 src={product.image}
                 alt={product.category}

@@ -10,7 +10,6 @@ import Signup from './pages/Signup';
 import Cart from './pages/Cart';
 import ComingSoon from './pages/ComingSoon';
 function App() {
-  console.log(import.meta.env);
   return (
     <Layout>
       <ReactQueryDevtools initialIsOpen />
@@ -20,10 +19,11 @@ function App() {
         <Route path='login' element={<Login />} />
         <Route path='signup' element={<Signup />} />
         <Route path='cart' element={<ComingSoon />} />
-        <Route path='loguot' element={<ComingSoon />} />
         <Route path='about' element={<ComingSoon />} />
-        <Route path='contact' element={<ComingSoon />} />
         <Route path='profile' element={<ComingSoon />} />
+        <Route path='contact' element={<ComingSoon />} />
+        <Route path='orders' element={<ComingSoon />} />
+        <Route path='products' element={<ComingSoon />} />
       </Routes>
     </Layout>
   );

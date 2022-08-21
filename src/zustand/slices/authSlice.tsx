@@ -8,7 +8,7 @@ export interface AuthState {
 
 export const createAuthSlice: StateCreator<
   AuthState,
-  [['zustand/devtools', never]],
+  [['zustand/devtools', any]],
   [],
   AuthState
 > = set => ({

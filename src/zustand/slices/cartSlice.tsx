@@ -16,7 +16,7 @@ export interface CartState {
 
 export const createCartSlice: StateCreator<
   CartState,
-  [['zustand/devtools', never]],
+  [['zustand/devtools', any]],
   [],
   CartState
 > = set => ({

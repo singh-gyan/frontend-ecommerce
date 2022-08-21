@@ -1,18 +1,10 @@
-import {
-  Card,
-  CardActionArea,
-  CardContent,
-  CardMedia,
-  Grid,
-  Stack,
-  Typography,
-} from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { baseUrl } from '../api/paths';
 import FavouriteSVG from '../assets/FavouriteSVG';
+import Spinner from '../components/atoms/Spinner';
 import useAppStore from '../zustand';
 
 interface Product {
@@ -26,7 +18,6 @@ const Product = () => {
   const location = useLocation();
   const nav = useNavigate();
   const isAuthenticated = useAppStore(state => state.isAuthenticated);
-  console.log(location.pathname);
   const [wishList, setWishList] = useState<{ [key: string]: number | string }>(
     {}
   );
@@ -38,7 +29,12 @@ const Product = () => {
         .then(response => response.data)
   );
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <>
+        {' '}
+        <Spinner />
+      </>
+    );
   }
   const handleWishList = (productId: any | undefined) => {
     if (!productId?.id) return;
@@ -94,7 +90,7 @@ const Product = () => {
 
                   <div className='px-5 py-6 space-y-2'>
                     {brands.map((items: { company?: string }) => (
-                      <div className='flex items-center'>
+                      <div className='flex items-center' key={items?.company}>
                         <input
                           id={items.company}
                           type='checkbox'
@@ -129,8 +125,8 @@ const Product = () => {
                     </legend>
 
                     <div className='px-5 py-6 space-y-2'>
-                      {rating.map(rating => (
-                        <div className='flex items-center'>
+                      {rating.map((rating, key) => (
+                        <div className='flex items-center' key={key}>
                           <input
                             id={rating}
                             type='checkbox'
@@ -182,8 +178,8 @@ const Product = () => {
           <div className='lg:col-span-3'>
             <div className='flex items-center justify-between'>
               <p className='text-sm text-gray-500'>
-                <span className='hidden sm:inline'>Showing</span>6 of 24
-                Products
+                {/* <span className='hidden sm:inline'>Showing</span>6 of 24
+                Products */}
               </p>
 
               <div className='ml-4'>
@@ -232,7 +228,9 @@ const Product = () => {
                         New
                       </span>
 
-                      <h5 className='mt-4 text-lg font-bold'>{data.Title}</h5>
+                      <h5 className='mt-4 text-lg font-bold h-20 overflow-hidden '>
+                        {data.Title}
+                      </h5>
 
                       <p className='mt-2 text-sm font-medium text-gray-600'>
                         ₹ {data.Price}
@@ -243,7 +241,7 @@ const Product = () => {
                         type='button'
                         className='flex items-center justify-center w-full px-8 py-4 mt-4 bg-yellow-500 rounded-sm'
                       >
-                        <span className='text-sm font-medium'>Add to Cart</span>
+                        <span className='text-md font-medium'>Add to Cart</span>
 
                         <svg
                           className='w-5 h-5 ml-1.5'
