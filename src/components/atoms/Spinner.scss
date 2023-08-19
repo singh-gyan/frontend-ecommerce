@@ -50,7 +50,6 @@ body {
   margin: 0;
   white-space: nowrap;
   &::before {
-    // For dot
     @include pseudo;
     z-index: 1;
     top: 40px;

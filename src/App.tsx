@@ -1,13 +1,11 @@
-import { useState } from 'react';
+import React from "react"
 import { Route, Routes, useRoutes } from 'react-router-dom';
-import reactLogo from './assets/react.svg';
 import Layout from './Layout/Layout';
 import Home from './pages/Home';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import Product from './pages/Product';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
-import Cart from './pages/Cart';
 import ComingSoon from './pages/ComingSoon';
 function App() {
   return (

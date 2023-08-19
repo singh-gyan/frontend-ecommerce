@@ -1,3 +1,4 @@
+import React from 'react'
 import axios from 'axios';
 import { getCatalog } from '../api/paths';
 import { useQuery } from '@tanstack/react-query';
